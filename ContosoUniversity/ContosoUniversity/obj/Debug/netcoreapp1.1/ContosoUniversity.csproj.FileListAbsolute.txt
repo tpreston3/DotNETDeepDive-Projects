@@ -1,0 +1,10 @@
+C:\Users\Thaddeus\Documents\Visual Studio 2017\Projects\DotNETDeepDive-Projects\ContosoUniversity\ContosoUniversity\bin\Debug\netcoreapp1.1\ContosoUniversity.deps.json
+C:\Users\Thaddeus\Documents\Visual Studio 2017\Projects\DotNETDeepDive-Projects\ContosoUniversity\ContosoUniversity\bin\Debug\netcoreapp1.1\ContosoUniversity.runtimeconfig.json
+C:\Users\Thaddeus\Documents\Visual Studio 2017\Projects\DotNETDeepDive-Projects\ContosoUniversity\ContosoUniversity\bin\Debug\netcoreapp1.1\ContosoUniversity.runtimeconfig.dev.json
+C:\Users\Thaddeus\Documents\Visual Studio 2017\Projects\DotNETDeepDive-Projects\ContosoUniversity\ContosoUniversity\bin\Debug\netcoreapp1.1\ContosoUniversity.dll
+C:\Users\Thaddeus\Documents\Visual Studio 2017\Projects\DotNETDeepDive-Projects\ContosoUniversity\ContosoUniversity\bin\Debug\netcoreapp1.1\ContosoUniversity.pdb
+C:\Users\Thaddeus\Documents\Visual Studio 2017\Projects\DotNETDeepDive-Projects\ContosoUniversity\ContosoUniversity\obj\Debug\netcoreapp1.1\ContosoUniversity.csprojResolveAssemblyReference.cache
+C:\Users\Thaddeus\Documents\Visual Studio 2017\Projects\DotNETDeepDive-Projects\ContosoUniversity\ContosoUniversity\obj\Debug\netcoreapp1.1\UserSecretsAssemblyInfo.cs
+C:\Users\Thaddeus\Documents\Visual Studio 2017\Projects\DotNETDeepDive-Projects\ContosoUniversity\ContosoUniversity\obj\Debug\netcoreapp1.1\ContosoUniversity.AssemblyInfo.cs
+C:\Users\Thaddeus\Documents\Visual Studio 2017\Projects\DotNETDeepDive-Projects\ContosoUniversity\ContosoUniversity\obj\Debug\netcoreapp1.1\ContosoUniversity.dll
+C:\Users\Thaddeus\Documents\Visual Studio 2017\Projects\DotNETDeepDive-Projects\ContosoUniversity\ContosoUniversity\obj\Debug\netcoreapp1.1\ContosoUniversity.pdb
