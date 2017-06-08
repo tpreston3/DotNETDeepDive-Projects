@@ -23,16 +23,12 @@ namespace Resume.Migrations
 
                     b.Property<int?>("AccomplishmentID");
 
-                    b.Property<int?>("JobID");
-
                     b.Property<string>("accomplishment")
                         .IsRequired();
 
                     b.HasKey("ID");
 
                     b.HasIndex("AccomplishmentID");
-
-                    b.HasIndex("JobID");
 
                     b.ToTable("Accomplishment");
                 });
@@ -98,6 +94,32 @@ namespace Resume.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Education");
+                });
+
+            modelBuilder.Entity("Resume.Models.Employment", b =>
+                {
+                    b.Property<int>("EmploymentID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("AccomplishmentID");
+
+                    b.Property<int?>("ContactID");
+
+                    b.Property<bool?>("Current");
+
+                    b.Property<int>("JobID");
+
+                    b.Property<int>("MyProperty");
+
+                    b.HasKey("EmploymentID");
+
+                    b.HasIndex("AccomplishmentID");
+
+                    b.HasIndex("ContactID");
+
+                    b.HasIndex("JobID");
+
+                    b.ToTable("Employment");
                 });
 
             modelBuilder.Entity("Resume.Models.Job", b =>
@@ -182,10 +204,23 @@ namespace Resume.Migrations
                     b.HasOne("Resume.Models.Accomplishment")
                         .WithMany("Accomplishments")
                         .HasForeignKey("AccomplishmentID");
+                });
 
-                    b.HasOne("Resume.Models.Job")
-                        .WithMany("Accomplishments")
-                        .HasForeignKey("JobID");
+            modelBuilder.Entity("Resume.Models.Employment", b =>
+                {
+                    b.HasOne("Resume.Models.Accomplishment", "Accomplishment")
+                        .WithMany("Employments")
+                        .HasForeignKey("AccomplishmentID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Resume.Models.Contact", "Contact")
+                        .WithMany("Employments")
+                        .HasForeignKey("ContactID");
+
+                    b.HasOne("Resume.Models.Job", "Job")
+                        .WithMany("Employments")
+                        .HasForeignKey("JobID")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
         }
     }

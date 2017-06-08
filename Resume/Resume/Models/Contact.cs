@@ -52,6 +52,8 @@ namespace Resume.Models
         [DataType(DataType.Url)]
         public string Website { get; set; }
 
+        public ICollection<Employment> Employments { get; set; }
+
         //Updates to Models with additional Properties - Delete Contacts Folder and Delete the Controller then initiate new scaffolding
         //Next you need to update your database with a new migration
 

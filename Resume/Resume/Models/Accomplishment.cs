@@ -21,12 +21,10 @@ namespace Resume.Models
 
        // [Display(Name = "For Which Job?")]
         
-       // public int? JobID { get; private set; }
-        //[ForeignKey("JobID")]
-        public virtual Job Jobs { get; set; }
+       public ICollection<Employment>  Employments { get; set; }
 
 
-        
+
 
     }
 }

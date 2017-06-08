@@ -34,7 +34,7 @@ namespace Resume.Models
         [Display(Name = "Job Description")]
         public string JobDescription { get; set; }
 
-        public virtual IQueryable<Accomplishment> Accomplishments { get; set; } //An IQueryable List of Accomplishments 
+        public ICollection<Employment> Employments { get; set; } //An ICollection List of Accomplishments 
 
 
     }
