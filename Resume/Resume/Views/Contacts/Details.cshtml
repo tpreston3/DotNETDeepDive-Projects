@@ -79,6 +79,52 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.ContactID">Edit</a> |
+    <div>
+        @Html.ActionLink("ADD EMPLOYMENT", "CreateEmployment", Model)
+    </div>
+    @if(Model.Employments != null && Model.Employments.Count > 0)
+    {
+        <table class="table table-striped">
+            <tr>
+                <td>Job</td>
+                <td>Is Current Job</td>
+            </tr>
+            @foreach(var emp in Model.Employments)
+            {
+                <tr>
+                    <td>
+                        @if(emp.Jobs != null)
+                        {
+                            foreach (var a in emp.Jobs)
+                            {
+                            <p>@a.EmployerName</p>
+                            }
+
+                        }
+                        else
+                        {
+                            <p>No Job Info Found</p>
+                        }
+                    </td>
+                    <td>
+                        @if(emp.Current.HasValue && emp.Current == true)
+                        {
+                            <p>Yes</p>
+                        }
+                        else
+                        {
+
+                            <p>No</p>
+                        }
+                    </td>
+                </tr>
+
+            }
+        </table>
+
+    }
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.ID">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>

@@ -16,12 +16,8 @@ namespace Resume.Models
         [Display(Name = "Add a Major Accomplishment")]
         public string accomplishment { get; set; }
 
-        [Display(Name = "Major Accomplishments")]
-        public virtual List<Accomplishment> Accomplishments { get; set; }
-
-       // [Display(Name = "For Which Job?")]
-        
-       public ICollection<Employment>  Employments { get; set; }
+       // Navigation Property to Jobs Model
+       public Job Jobs{ get; set; }
 
 
 

@@ -10,10 +10,12 @@ using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using Resume.Models;
 
+
 namespace Resume
 {
     public class Startup
     {
+       
         public Startup(IHostingEnvironment env)
         {
             var builder = new ConfigurationBuilder()
@@ -39,7 +41,7 @@ namespace Resume
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, ResumeContext context)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
@@ -62,6 +64,10 @@ namespace Resume
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+           // Data.DbIntialize.Intialize(context);
+
+
         }
     }
 }

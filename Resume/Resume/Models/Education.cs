@@ -21,8 +21,7 @@ namespace Resume.Models
 
         [Required]
         public string City { get; set; }
-
-
+        
         [Required]
         [Display(Name = "Date Started")]
         [DataType(DataType.Date)]
@@ -41,7 +40,7 @@ namespace Resume.Models
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyy}")]
         public DateTime Graduation { get; set; }
 
-
+        public Contact Contact { get; set; } // Navigation Property 
 
     }
 }

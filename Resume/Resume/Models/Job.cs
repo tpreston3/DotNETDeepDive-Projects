@@ -34,8 +34,8 @@ namespace Resume.Models
         [Display(Name = "Job Description")]
         public string JobDescription { get; set; }
 
-        public ICollection<Employment> Employments { get; set; } //An ICollection List of Accomplishments 
+        public Employment Employments { get; set; } //Link back to an Employments
+        public ICollection<Accomplishment> Accomplishments { get; set; }
 
-
-    }
+}
 }

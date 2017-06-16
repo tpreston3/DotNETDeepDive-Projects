@@ -1,7 +1,7 @@
 @model IEnumerable<Resume.Models.Accomplishment>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Enter Accomplishments";
 }
 
 <h2>Index</h2>
@@ -25,9 +25,9 @@
                 @Html.DisplayFor(modelItem => item.accomplishment)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.AccomplishmentID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.AccomplishmentID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.AccomplishmentID">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
             </td>
         </tr>
 }

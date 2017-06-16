@@ -33,7 +33,12 @@ namespace Resume.Controllers
             }
 
             var contact = await _context.Contact
+                .Include(c => c.Employments)
+                .ThenInclude(e => e.Jobs)
                 .SingleOrDefaultAsync(m => m.ID == id);
+
+          
+
             if (contact == null)
             {
                 return NotFound();
@@ -41,6 +46,20 @@ namespace Resume.Controllers
 
             return View(contact);
         }
+
+
+
+        public IActionResult CreateEmployments(Contact contact)
+        {
+
+            //var contact = new Contact() { ID = contactId };
+            var emp = new Employment();
+            emp.Contact = contact;
+
+            return View(emp);
+        }
+
+
 
         // GET: Contacts/Create
         public IActionResult Create()
@@ -138,8 +157,17 @@ namespace Resume.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var contact = await _context.Contact.SingleOrDefaultAsync(m => m.ID == id);
+            
+            var contact = await _context.Contact
+                .Include(p => p.ProfessionalSkills)
+                .Include(edu => edu.Educations)
+                .Include(r => r.References)
+                .Include(c => c.Employments)
+                .ThenInclude(e => e.Jobs)
+                .SingleOrDefaultAsync(m => m.ID == id);
+          
             _context.Contact.Remove(contact);
+
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");
         }

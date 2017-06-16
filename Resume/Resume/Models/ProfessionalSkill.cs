@@ -14,7 +14,7 @@ namespace Resume.Models
         [Required]
         [Display(Name = "Descrption of Skill/Course")]
         [StringLength(60, MinimumLength = 5)]
-        public string SkillDescrption { get; set; }
+        public string SkillDescription { get; set; }
 
         [Required]
         [Display(Name = "Date Completed")]
@@ -31,6 +31,9 @@ namespace Resume.Models
 
         [Display(Name = "Zip Code")]
         public int? ZipCode { get; set; }
+
+        // Navigation Property to Contact Model
+        public Contact Contact { get; set; }
 
 
     }

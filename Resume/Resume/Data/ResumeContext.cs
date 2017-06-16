@@ -28,7 +28,16 @@ namespace Resume.Models
         public DbSet<Resume.Models.Reference> Reference { get; set; }
 
         public DbSet<Resume.Models.ProfessionalSkill> ProfessionalSkill { get; set; }
+
+        public DbSet<Resume.Models.Employment> Employments { get; set; }
     }
+//    protected override void OnModelCreating(ModelBuilder builder)
+//    {
+//        builder.Entity<Accomplishment>().ToTable("Accomplishment");
+//        builder.Entity<Job>().ToTable("Job");
+//        builder.Entity<Employments>().ToTable("Employments");
+//        base.OnModelCreating(builder);
+//    }
 }
 
 

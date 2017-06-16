@@ -31,7 +31,7 @@ namespace Resume.Models
 
         [Required(ErrorMessage = "Field Cannot be blank")]
         [Display(Name = "Relationship to Reference")]
-        public string Relationship { get; set; }  // Co-worker, Manager, Supervisor, Friend etc.
+        public string Relationship { get; set; }  //Co-worker, Manager, Supervisor, Friend etc.
 
         [Display(Name = "Phone Number")]
         [DisplayFormat(ApplyFormatInEditMode = true)]
@@ -41,6 +41,8 @@ namespace Resume.Models
         [Display(Name = "Email")]
         [DataType(DataType.EmailAddress)]
         public string EmailAddr { get; set; }
+
+        public Contact Contact { get; set; }
 
     }
 }

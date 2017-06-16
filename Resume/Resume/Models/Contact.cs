@@ -49,10 +49,21 @@ namespace Resume.Models
         [DataType(DataType.EmailAddress)]
         public string  EmailAddr { get; set; }
 
+        [Display(Name = "Enter a Website")]
         [DataType(DataType.Url)]
         public string Website { get; set; }
 
-        public ICollection<Employment> Employments { get; set; }
+        [Display(Name = "Employments History")]
+        public ICollection<Employment> Employments { get; set; } //List of Employments 
+
+        [Display(Name = "Professional References ")]
+        public ICollection<Reference> References { get; set; } //List of References 
+
+        [Display(Name = "Education History")]
+        public ICollection<Education> Educations { get; set; } // List of Education
+
+        [Display(Name = "Descrption of Skills/Courses")]
+        public ICollection<ProfessionalSkill> ProfessionalSkills{ get; set; }   // List of Professional Skills
 
         //Updates to Models with additional Properties - Delete Contacts Folder and Delete the Controller then initiate new scaffolding
         //Next you need to update your database with a new migration

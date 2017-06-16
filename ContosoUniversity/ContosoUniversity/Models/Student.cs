@@ -9,7 +9,6 @@ namespace ContosoUniversity.Models
 {
     public class Student
     {
-
         public int ID { get; set; }
 
         [Required]
@@ -32,6 +31,12 @@ namespace ContosoUniversity.Models
 
         public ICollection<Enrollment> Enrollments { get; set; }
 
-        
+        [NotMapped]
+        public string FullName
+        {
+            get {
+                return String.Format("{0} {1}", FirstMidName, LastName);
+            }
+        }
     }
 }

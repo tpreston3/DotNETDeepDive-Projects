@@ -85,9 +85,9 @@ namespace Resume.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,accomplishment")] Accomplishment accomplishment)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,accomplishment")] Accomplishment Accomplishment)
         {
-            if (id != accomplishment.ID)
+            if (id != Accomplishment.ID)
             {
                 return NotFound();
             }
@@ -96,12 +96,12 @@ namespace Resume.Controllers
             {
                 try
                 {
-                    _context.Update(accomplishment);
+                    _context.Update(Accomplishment);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!AccomplishmentExists(accomplishment.ID))
+                    if (!AccomplishmentExists(Accomplishment.ID))
                     {
                         return NotFound();
                     }
@@ -112,7 +112,7 @@ namespace Resume.Controllers
                 }
                 return RedirectToAction("Index");
             }
-            return View(accomplishment);
+            return View(Accomplishment);
         }
 
         // GET: Accomplishments/Delete/5

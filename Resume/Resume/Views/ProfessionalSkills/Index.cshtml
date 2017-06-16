@@ -13,7 +13,7 @@
     <thead>
         <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.SkillDescrption)
+                    @Html.DisplayNameFor(model => model.SkillDescription)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Date)
@@ -36,8 +36,9 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
+          
             <td>
-                @Html.DisplayFor(modelItem => item.SkillDescrption)
+                @Html.DisplayFor(modelItem => item.SkillDescription)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Date)
@@ -54,7 +55,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.ZipCode)
             </td>
-            <td>
+             <td>
                 <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>

@@ -88,7 +88,7 @@ namespace ContosoUniversity
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
 
-            DbIntializer.Initialize(context);
+            //Data.DbInitializer.Initialize(context);
         }
     }
 }

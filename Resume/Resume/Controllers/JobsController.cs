@@ -33,6 +33,9 @@ namespace Resume.Controllers
             }
 
             var job = await _context.Job
+                .Include(s => s.Employments) //Need to include the Employments table data linked to this ID
+                .Include(s => s.Employments.Jobs)
+                    .ThenInclude(s => s.Accomplishments)     // Need to include the Employments table with its list of accomplishments from the Accomplishments table
                 .SingleOrDefaultAsync(m => m.ID == id);
             if (job == null)
             {

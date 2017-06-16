@@ -21,14 +21,14 @@ namespace Resume.Migrations
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("AccomplishmentID");
+                    b.Property<int?>("JobsID");
 
                     b.Property<string>("accomplishment")
                         .IsRequired();
 
                     b.HasKey("ID");
 
-                    b.HasIndex("AccomplishmentID");
+                    b.HasIndex("JobsID");
 
                     b.ToTable("Accomplishment");
                 });
@@ -93,6 +93,8 @@ namespace Resume.Migrations
 
                     b.HasKey("ID");
 
+                    b.HasIndex("ContactID");
+
                     b.ToTable("Education");
                 });
 
@@ -101,25 +103,17 @@ namespace Resume.Migrations
                     b.Property<int>("EmploymentID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("AccomplishmentID");
-
                     b.Property<int?>("ContactID");
 
                     b.Property<bool?>("Current");
 
                     b.Property<int>("JobID");
 
-                    b.Property<int>("MyProperty");
-
                     b.HasKey("EmploymentID");
-
-                    b.HasIndex("AccomplishmentID");
 
                     b.HasIndex("ContactID");
 
-                    b.HasIndex("JobID");
-
-                    b.ToTable("Employment");
+                    b.ToTable("Employments");
                 });
 
             modelBuilder.Entity("Resume.Models.Job", b =>
@@ -129,6 +123,8 @@ namespace Resume.Migrations
 
                     b.Property<string>("EmployerName")
                         .IsRequired();
+
+                    b.Property<int?>("EmploymentsEmploymentID");
 
                     b.Property<string>("JobDescription");
 
@@ -141,6 +137,8 @@ namespace Resume.Migrations
 
                     b.HasKey("ID");
 
+                    b.HasIndex("EmploymentsEmploymentID");
+
                     b.ToTable("Job");
                 });
 
@@ -151,11 +149,13 @@ namespace Resume.Migrations
 
                     b.Property<string>("City");
 
+                    b.Property<int?>("ContactID");
+
                     b.Property<DateTime>("Date");
 
                     b.Property<string>("InstitutionName");
 
-                    b.Property<string>("SkillDescrption")
+                    b.Property<string>("SkillDescription")
                         .IsRequired()
                         .HasMaxLength(60);
 
@@ -165,6 +165,8 @@ namespace Resume.Migrations
 
                     b.HasKey("ID");
 
+                    b.HasIndex("ContactID");
+
                     b.ToTable("ProfessionalSkill");
                 });
 
@@ -172,6 +174,8 @@ namespace Resume.Migrations
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<int?>("ContactID");
 
                     b.Property<string>("EmailAddr");
 
@@ -196,31 +200,52 @@ namespace Resume.Migrations
 
                     b.HasKey("ID");
 
+                    b.HasIndex("ContactID");
+
                     b.ToTable("Reference");
                 });
 
             modelBuilder.Entity("Resume.Models.Accomplishment", b =>
                 {
-                    b.HasOne("Resume.Models.Accomplishment")
+                    b.HasOne("Resume.Models.Job", "Jobs")
                         .WithMany("Accomplishments")
-                        .HasForeignKey("AccomplishmentID");
+                        .HasForeignKey("JobsID");
+                });
+
+            modelBuilder.Entity("Resume.Models.Education", b =>
+                {
+                    b.HasOne("Resume.Models.Contact", "Contact")
+                        .WithMany("Educations")
+                        .HasForeignKey("ContactID")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Resume.Models.Employment", b =>
                 {
-                    b.HasOne("Resume.Models.Accomplishment", "Accomplishment")
-                        .WithMany("Employments")
-                        .HasForeignKey("AccomplishmentID")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("Resume.Models.Contact", "Contact")
                         .WithMany("Employments")
                         .HasForeignKey("ContactID");
+                });
 
-                    b.HasOne("Resume.Models.Job", "Job")
-                        .WithMany("Employments")
-                        .HasForeignKey("JobID")
-                        .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity("Resume.Models.Job", b =>
+                {
+                    b.HasOne("Resume.Models.Employment", "Employments")
+                        .WithMany("Jobs")
+                        .HasForeignKey("EmploymentsEmploymentID");
+                });
+
+            modelBuilder.Entity("Resume.Models.ProfessionalSkill", b =>
+                {
+                    b.HasOne("Resume.Models.Contact", "Contact")
+                        .WithMany("ProfessionalSkills")
+                        .HasForeignKey("ContactID");
+                });
+
+            modelBuilder.Entity("Resume.Models.Reference", b =>
+                {
+                    b.HasOne("Resume.Models.Contact", "Contact")
+                        .WithMany("References")
+                        .HasForeignKey("ContactID");
                 });
         }
     }
