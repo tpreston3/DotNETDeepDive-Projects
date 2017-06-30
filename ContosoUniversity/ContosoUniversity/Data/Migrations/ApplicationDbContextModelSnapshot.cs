@@ -110,6 +110,10 @@ namespace ContosoUniversity.Data.Migrations
                     b.Property<string>("Name")
                         .HasMaxLength(50);
 
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate();
+
                     b.Property<DateTime>("StartDate");
 
                     b.HasKey("DepartmentID");
@@ -139,27 +143,6 @@ namespace ContosoUniversity.Data.Migrations
                     b.ToTable("Enrollment");
                 });
 
-            modelBuilder.Entity("ContosoUniversity.Models.Instructor", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("FirstMidName")
-                        .IsRequired()
-                        .HasColumnName("FirstName")
-                        .HasMaxLength(50);
-
-                    b.Property<DateTime>("HireDate");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasMaxLength(50);
-
-                    b.HasKey("ID");
-
-                    b.ToTable("Instructor");
-                });
-
             modelBuilder.Entity("ContosoUniversity.Models.OfficeAssignment", b =>
                 {
                     b.Property<int>("InstructorID");
@@ -172,15 +155,17 @@ namespace ContosoUniversity.Data.Migrations
                     b.ToTable("OfficeAssignment");
                 });
 
-            modelBuilder.Entity("ContosoUniversity.Models.Student", b =>
+            modelBuilder.Entity("ContosoUniversity.Models.Person", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("EnrollmentDate");
+                    b.Property<string>("Discriminator")
+                        .IsRequired();
 
                     b.Property<string>("FirstMidName")
                         .IsRequired()
+                        .HasColumnName("FirstName")
                         .HasMaxLength(50);
 
                     b.Property<string>("LastName")
@@ -189,7 +174,9 @@ namespace ContosoUniversity.Data.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Student");
+                    b.ToTable("Person");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("Person");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRole", b =>
@@ -297,6 +284,28 @@ namespace ContosoUniversity.Data.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("ContosoUniversity.Models.Instructor", b =>
+                {
+                    b.HasBaseType("ContosoUniversity.Models.Person");
+
+                    b.Property<DateTime>("HireDate");
+
+                    b.ToTable("Instructor");
+
+                    b.HasDiscriminator().HasValue("Instructor");
+                });
+
+            modelBuilder.Entity("ContosoUniversity.Models.Student", b =>
+                {
+                    b.HasBaseType("ContosoUniversity.Models.Person");
+
+                    b.Property<DateTime>("EnrollmentDate");
+
+                    b.ToTable("Student");
+
+                    b.HasDiscriminator().HasValue("Student");
                 });
 
             modelBuilder.Entity("ContosoUniversity.Models.Course", b =>

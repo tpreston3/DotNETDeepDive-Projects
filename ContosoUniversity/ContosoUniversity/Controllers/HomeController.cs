@@ -5,20 +5,20 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ContosoUniversity.Data;
-using ContosoUniversity.Models; 
+using ContosoUniversity.Models;
+using System.Data.Common;
 
 namespace ContosoUniversity.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ApplicationDbContext  _context;
+        private readonly ApplicationDbContext _context;
 
-        public HomeController (ApplicationDbContext context)
+        public HomeController(ApplicationDbContext context)
         {
             _context = context;
-
         }
-        
+
         public IActionResult Index()
         {
             return View();
@@ -26,31 +26,66 @@ namespace ContosoUniversity.Controllers
 
         public async Task<IActionResult> About()
         {
-            //ViewData["Message"] = "Your application description page.";
+            List<EnrollmentDateGroup> groups = new List<EnrollmentDateGroup>();
 
-            IQueryable<EnrollmentDateGroup> data =
-                    from student in _context.Students
-                    group student by student.EnrollmentDate
-                    into dateGroup select new EnrollmentDateGroup()
+
+            try
+            {
+                using (var conn = _context.Database.GetDbConnection())
+                {
+                    await conn.OpenAsync();
+                    using (var command = conn.CreateCommand())
                     {
-                        EnrollmentDate = dateGroup.Key, 
-                        StudentCount = dateGroup.Count()
-                        
-                    };
+                        string query = "SELECT EnrollmentDate, COUNT(*) AS StudentCount"
+                            + "FROM Person"
+                            + "WHERE Discriminator ='Student' "
+                            + "GROUP BY EnrollmentDate";
+                        command.CommandText = query;
+                        using (DbDataReader reader = await command.ExecuteReaderAsync())
+                        {
+                            if (reader.HasRows)
+                            {
+                                while (await reader.ReadAsync())
+                                {
+                                    var row = new EnrollmentDateGroup
+                                    {
+                                        EnrollmentDate = reader.GetDateTime(0),
+                                        StudentCount = reader.GetInt32(1)
+                                    };
+                                    groups.Add(row);
+                                }
+                            }
+                        }
+                       
+                    }
+                }
+            }
+            finally
+            {
 
-            //IQueryable<Student> newData =
-            //        from s in _context.Students
-            //        group s by s.LastName
-            //        into enrollment select new Student()
-            //        {
-            //            LastName = enrollment.Key,
-            //            Enrollments = enrollment
-            //        };
+            }
+       
+    return View(groups);
+}
 
-            return View(await data.AsNoTracking().ToListAsync());
-        }
 
-        public IActionResult Contact()
+    #region
+    //    IQueryable<EnrollmentDateGroup> data =
+    //            from student in _context.Students
+    //            group student by student.EnrollmentDate
+    //            into dateGroup select new EnrollmentDateGroup()
+    //            {
+    //                EnrollmentDate = dateGroup.Key, 
+    //                StudentCount = dateGroup.Count()
+
+    //            };
+    #endregion
+
+
+
+
+
+    public IActionResult Contact()
         {
             ViewData["Message"] = "Your contact page.";
 

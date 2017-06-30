@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using ContosoUniversity.Data;
 using ContosoUniversity.Models;
 using ContosoUniversity.Services;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ContosoUniversity
 {
@@ -46,49 +47,88 @@ namespace ContosoUniversity
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
-
-           
+            services.AddMvc(options =>
+            {
+                options.SslPort = 44306;
+                options.Filters.Add(new RequireHttpsAttribute());
+            }            );
 
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
+            services.Configure<IdentityOptions>(options =>
+            {
+                //set up strong password
+                options.Password.RequireDigit = true;
+                options.Password.RequiredLength = 8;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = true;
+                options.Password.RequireLowercase = true;
+                //Lockout
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
+                options.Lockout.MaxFailedAccessAttempts = 10;
+                //cookies
+                options.Cookies.ApplicationCookie.ExpireTimeSpan = TimeSpan.FromDays(150);
+                options.Cookies.ApplicationCookie.LoginPath = "/Account/LogIn";
+                options.Cookies.ApplicationCookie.LogoutPath = "/Account/logout";
 
+                options.User.RequireUniqueEmail = true;
 
+            }
+            );
 
-            services.AddMvc();
-        }
+            }
+       
+    // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+    public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, ApplicationDbContext context)
+    {
+        loggerFactory.AddConsole(Configuration.GetSection("Logging"));
+        loggerFactory.AddDebug();
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, ApplicationDbContext context)
+        if (env.IsDevelopment())
         {
-            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
-            loggerFactory.AddDebug();
-
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
-                app.UseBrowserLink();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
-            }
-
+            app.UseDeveloperExceptionPage();
+            app.UseDatabaseErrorPage();
+            app.UseBrowserLink();
+        }
+        else
+        {
+            app.UseExceptionHandler("/Home/Error");
+        }
+            
             app.UseStaticFiles();
 
             app.UseIdentity();
 
-            // Add external authentication middleware below. To configure them please see https://go.microsoft.com/fwlink/?LinkID=532715
+            // Add external authentication middleware Twitter. To configure them please see https://go.microsoft.com/fwlink/?LinkID=532715
+            app.UseTwitterAuthentication(new TwitterOptions()
+            {
+                ConsumerKey = Configuration["ConsumerKey"],
+                ConsumerSecret = Configuration["ConsumerSecret"]
+            });
+
+            // Add external authentication for Facebook 
+            app.UseFacebookAuthentication(new FacebookOptions()
+            {
+                AppId = Configuration["Facebook:AppId"],
+                AppSecret = Configuration["Facebook:AppSecret"]
+            });
+            // Add external authentication for Google
+            app.UseGoogleAuthentication(new GoogleOptions()
+            {
+                ClientId = Configuration["Authentication:Google:ClientId"],
+                ClientSecret = Configuration["Authentication:Google:ClientSecret"]
+            });
 
             app.UseMvc(routes =>
-            {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
-            });
+        {
+            routes.MapRoute(
+                name: "default",
+                template: "{controller=Home}/{action=Index}/{id?}");
+        });
+      
 
             //Data.DbInitializer.Initialize(context);
         }
-    }
+}
 }

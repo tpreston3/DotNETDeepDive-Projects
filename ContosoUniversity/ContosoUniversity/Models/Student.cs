@@ -7,21 +7,21 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ContosoUniversity.Models
 {
-    public class Student
+    public class Student : Person
     {
-        public int ID { get; set; }
+        //public int ID { get; set; }
 
-        [Required]
-        [Display(Name = "Last Name")]
-        [StringLength(50, ErrorMessage ="Get a shorter last name must be less than 50 Characters")]
-        [RegularExpression(@"^[A-Z].*$", ErrorMessage ="First Letter must be capital letter")]
-        public string LastName { get; set; }
+        //[Required]
+        //[Display(Name = "Last Name")]
+        //[StringLength(50, ErrorMessage ="Get a shorter last name must be less than 50 Characters")]
+        //[RegularExpression(@"^[A-Z].*$", ErrorMessage ="First Letter must be capital letter")]
+        //public string LastName { get; set; }
 
-        [Required]
-        [Display(Name = "First Name")]
-        [StringLength(50, ErrorMessage = "Get a shorter First name must be less than 50 Characters")]
-        [RegularExpression(@"^[A-Z].*$", ErrorMessage = "First Letter must be capital letter")]
-        public string  FirstMidName { get; set; }
+        //[Required]
+        //[Display(Name = "First Name")]
+        //[StringLength(50, ErrorMessage = "Get a shorter First name must be less than 50 Characters")]
+        //[RegularExpression(@"^[A-Z].*$", ErrorMessage = "First Letter must be capital letter")]
+        //public string  FirstMidName { get; set; }
 
         [Required]
         [Display(Name = "Enrollment Date")]
@@ -31,12 +31,12 @@ namespace ContosoUniversity.Models
 
         public ICollection<Enrollment> Enrollments { get; set; }
 
-        [NotMapped]
-        public string FullName
-        {
-            get {
-                return String.Format("{0} {1}", FirstMidName, LastName);
-            }
-        }
+        //[NotMapped]
+        //public string FullName
+        //{
+        //    get {
+        //        return String.Format("{0} {1}", FirstMidName, LastName);
+        //    }
+        //}
     }
 }
