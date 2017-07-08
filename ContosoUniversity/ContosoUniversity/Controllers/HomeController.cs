@@ -7,9 +7,11 @@ using Microsoft.EntityFrameworkCore;
 using ContosoUniversity.Data;
 using ContosoUniversity.Models;
 using System.Data.Common;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ContosoUniversity.Controllers
 {
+    [AllowAnonymous]
     public class HomeController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -37,9 +39,9 @@ namespace ContosoUniversity.Controllers
                     using (var command = conn.CreateCommand())
                     {
                         string query = "SELECT EnrollmentDate, COUNT(*) AS StudentCount"
-                            + "FROM Person"
-                            + "WHERE Discriminator ='Student' "
-                            + "GROUP BY EnrollmentDate";
+                            + " FROM Person"
+                            + " WHERE Discriminator ='Student' "
+                            + " GROUP BY EnrollmentDate";
                         command.CommandText = query;
                         using (DbDataReader reader = await command.ExecuteReaderAsync())
                         {

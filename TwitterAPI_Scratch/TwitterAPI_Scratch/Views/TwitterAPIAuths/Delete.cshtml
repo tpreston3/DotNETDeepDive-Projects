@@ -1,0 +1,65 @@
+@model TwitterAPI_Scratch.Models.TwitterAPIAuth
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>TwitterAPIAuth</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <input type="hidden" asp-for="ID" />
+        <dt>
+            @Html.DisplayNameFor(model => model.ConsumerKey)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ConsumerKey)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ConsumerSecret)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ConsumerSecret)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AccessToken)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AccessToken)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AccessTokenSecret)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AccessTokenSecret)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.BaseURL)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.BaseURL)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Owner)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Owner)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.OwnerID)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.OwnerID)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            <a asp-action="Index">Back to List</a>
+        </div>
+    </form>
+</div>

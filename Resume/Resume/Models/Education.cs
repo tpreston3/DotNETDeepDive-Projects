@@ -10,9 +10,6 @@ namespace Resume.Models
     {
         public int ID { get; set; }
 
-        [Display(Name = "Assocaited Contact")]
-        public int ContactID { get; set; }
-
         [Display(Name = "Name Of Institution")]
         public string InstitutionName { get; set; }
 

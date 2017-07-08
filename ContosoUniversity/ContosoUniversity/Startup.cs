@@ -13,6 +13,9 @@ using ContosoUniversity.Data;
 using ContosoUniversity.Models;
 using ContosoUniversity.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace ContosoUniversity
 {
@@ -47,12 +50,21 @@ namespace ContosoUniversity
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
+
+           // var skipSSL = Configuration.GetValue<bool>("LocalTest:skipSSL");
+
             services.AddMvc(options =>
             {
+                //req. Authorization
+                var policy = new AuthorizationPolicyBuilder()
+                    .RequireAuthenticatedUser()
+                    .Build();
+                options.Filters.Add(new AuthorizeFilter(policy));
+                // end req. Authorization
                 options.SslPort = 44306;
                 options.Filters.Add(new RequireHttpsAttribute());
-            }            );
 
+            });
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
@@ -71,16 +83,16 @@ namespace ContosoUniversity
                 options.Cookies.ApplicationCookie.ExpireTimeSpan = TimeSpan.FromDays(150);
                 options.Cookies.ApplicationCookie.LoginPath = "/Account/LogIn";
                 options.Cookies.ApplicationCookie.LogoutPath = "/Account/logout";
-
                 options.User.RequireUniqueEmail = true;
-
             }
             );
+            services.AddScoped<IAuthorizationHandler, Authorization.InstructorIsOwnerAuthorizationHandler>();
 
             }
        
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-    public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, ApplicationDbContext context)
+    public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, ApplicationDbContext context, UserManager<ApplicationUser> userManager,
+        SignInManager<ApplicationUser> signInManager)
     {
         loggerFactory.AddConsole(Configuration.GetSection("Logging"));
         loggerFactory.AddDebug();
@@ -128,7 +140,7 @@ namespace ContosoUniversity
         });
       
 
-            //Data.DbInitializer.Initialize(context);
+         DbInitializer.Initialize(context, userManager, signInManager);
         }
 }
 }

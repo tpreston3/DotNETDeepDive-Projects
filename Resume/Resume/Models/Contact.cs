@@ -54,19 +54,18 @@ namespace Resume.Models
         public string Website { get; set; }
 
         [Display(Name = "Employments History")]
-        public ICollection<Employment> Employments { get; set; } //List of Employments 
+        public ICollection<Job> Jobs { get; set; } //List of Jobs Per Contact
 
         [Display(Name = "Professional References ")]
-        public ICollection<Reference> References { get; set; } //List of References 
+        public ICollection<Reference> References { get; set; } //List of References Per Contact
 
         [Display(Name = "Education History")]
-        public ICollection<Education> Educations { get; set; } // List of Education
+        public ICollection<Education> Educations { get; set; } // List of Education Per Contact
 
         [Display(Name = "Descrption of Skills/Courses")]
-        public ICollection<ProfessionalSkill> ProfessionalSkills{ get; set; }   // List of Professional Skills
+        public ICollection<ProfessionalSkill> ProfessionalSkills{ get; set; }   // List of Professional Skills Per Contact
 
-        //Updates to Models with additional Properties - Delete Contacts Folder and Delete the Controller then initiate new scaffolding
-        //Next you need to update your database with a new migration
+       
 
     }
 }

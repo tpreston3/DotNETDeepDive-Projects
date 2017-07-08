@@ -1,0 +1,10 @@
+﻿{
+  "ConsumerKey": "2tBdPzAJoLJXhcNdn4sY3LqtA",
+  "ConsumerSecret": "JNB1dDSwiARaN3Av44QAn3BZHq4BWkaYIxq6JKilkF2hE0h0Hj",
+  "AccessToken": "73548596-QX7g648uFOGI68kqvUwyR9ERajR2uRn2qazEtFoIP",
+  "AccessTokenSecret": "iBqOnHrnOos9NnK6jVyX4hx6fAbJwIxXPH6TXXIugmRoM",
+  "BaseURL": "https://api.twitter.com/1.1/",
+  "Owner": "nickwaye",
+  "OwnerID": "73548596"
+
+}

@@ -1,0 +1,43 @@
+@model Resume.Models.Employment
+@{
+    ViewData["Title"] = "Create Employments";
+}
+
+<div class="row">
+    <div class="col-md-2">
+        Adding Employments for:
+    </div>
+    <div class="col-md-2">
+        @Model.Contact.FirstName
+    </div>
+    <div class="col-md-2">
+        @Model.Contact.LastName
+    </div>
+    <div class="col-md-2">
+        @Model.Contact.EmailAddr
+    </div>
+</div>
+
+
+<form asp-action="Create">
+    <div class="form-horizontal">
+        <h4>Employments</h4>
+        <hr />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="Job.EmployerName" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Job.EmployerName" class="form-control" />
+                <span asp-validation-for="Job.EmployerName" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+</form>
+
+<div>
+    @Html.ActionLink("Back", "Details", new { ID= Model.Contact.ID})
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -290,7 +290,11 @@ namespace ContosoUniversity.Data.Migrations
                 {
                     b.HasBaseType("ContosoUniversity.Models.Person");
 
+                    b.Property<string>("Email");
+
                     b.Property<DateTime>("HireDate");
+
+                    b.Property<string>("UserId");
 
                     b.ToTable("Instructor");
 

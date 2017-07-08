@@ -14,7 +14,7 @@ namespace Resume.Models
 
         [Required]
         [Display(Name = "Add a Major Accomplishment")]
-        public string accomplishment { get; set; }
+        public string Description { get; set; }
 
        // Navigation Property to Jobs Model
        public Job Jobs{ get; set; }

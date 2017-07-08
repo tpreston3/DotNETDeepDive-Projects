@@ -44,14 +44,15 @@
             Accomplishments
         </dt>
         <dd>
-            @if (Model.Accomplishments != null)
+            @if (Model.Employments.Jobs != null)
             {
                
                 <ul>
-                    @foreach(var accomplishment in Model.Employments.Jobs)
+                    
+                    @foreach(var employment in Model.Employments.Jobs)
                     {
                         <li>
-                            @accomplishment.Accomplishments
+                            @employment.Accomplishments
                         </li>
 
                     }

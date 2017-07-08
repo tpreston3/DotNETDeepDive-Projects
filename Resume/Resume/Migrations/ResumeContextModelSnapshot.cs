@@ -21,10 +21,10 @@ namespace Resume.Migrations
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("JobsID");
-
-                    b.Property<string>("accomplishment")
+                    b.Property<string>("Description")
                         .IsRequired();
+
+                    b.Property<int?>("JobsID");
 
                     b.HasKey("ID");
 
@@ -78,7 +78,7 @@ namespace Resume.Migrations
                     b.Property<string>("City")
                         .IsRequired();
 
-                    b.Property<int>("ContactID");
+                    b.Property<int?>("ContactID");
 
                     b.Property<DateTime>("EndDate");
 
@@ -107,7 +107,7 @@ namespace Resume.Migrations
 
                     b.Property<bool?>("Current");
 
-                    b.Property<int>("JobID");
+                    b.Property<int?>("JobID");
 
                     b.HasKey("EmploymentID");
 
@@ -216,8 +216,7 @@ namespace Resume.Migrations
                 {
                     b.HasOne("Resume.Models.Contact", "Contact")
                         .WithMany("Educations")
-                        .HasForeignKey("ContactID")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("ContactID");
                 });
 
             modelBuilder.Entity("Resume.Models.Employment", b =>

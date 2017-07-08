@@ -21,6 +21,7 @@ namespace Resume.Controllers
         // GET: Accomplishments
         public async Task<IActionResult> Index()
         {
+
             return View(await _context.Accomplishment.ToListAsync());
         }
 
@@ -33,7 +34,9 @@ namespace Resume.Controllers
             }
 
             var accomplishment = await _context.Accomplishment
-                .SingleOrDefaultAsync(m => m.ID == id);
+                .Include(j => j.Jobs)
+              .SingleOrDefaultAsync(m => m.ID == id);
+
             if (accomplishment == null)
             {
                 return NotFound();
@@ -43,8 +46,13 @@ namespace Resume.Controllers
         }
 
         // GET: Accomplishments/Create
-        public IActionResult Create()
+        public IActionResult Create(int?  id, Job jobs)
         {
+            var job = _context.Job
+                .Where(j => j.ID == id)
+                .Single();
+            ViewData["Employer Name"] = job.EmployerName;
+
             return View();
         }
 
@@ -53,15 +61,21 @@ namespace Resume.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,accomplishment")] Accomplishment accomplishment)
+        public async Task<IActionResult> Create(int id, [Bind("Description")] Accomplishment Accomplishment)
         {
+            var job = _context.Job
+                .Where(j => j.ID == id)
+                .Single();
+
+            Accomplishment.Jobs = job;
+            
             if (ModelState.IsValid)
             {
-                _context.Add(accomplishment);
+                _context.Add(Accomplishment);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            return View(accomplishment);
+            return View(Accomplishment);
         }
 
         // GET: Accomplishments/Edit/5
@@ -72,7 +86,8 @@ namespace Resume.Controllers
                 return NotFound();
             }
 
-            var accomplishment = await _context.Accomplishment.SingleOrDefaultAsync(m => m.ID == id);
+            var accomplishment = await _context.Accomplishment
+                                .SingleOrDefaultAsync(m => m.ID == id);
             if (accomplishment == null)
             {
                 return NotFound();

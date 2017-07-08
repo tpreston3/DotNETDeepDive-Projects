@@ -1,0 +1,71 @@
+@model IEnumerable<ContosoUniversity.Models.Department>
+@using ContosoUniversity
+@using ContosoUniversity.Models
+@using ContosoUniversity.Models.AccountViewModels
+@using ContosoUniversity.Models.ManageViewModels
+@using ContosoUniversity.Authorization
+@using Microsoft.AspNetCore.Identity
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService AuthorizationService
+
+@{
+    ViewData["Title"] = "Departments";
+}
+
+<h2>Departments</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Budget)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StartDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Administrator)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Budget)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Administrator.FullName)
+                </td>
+                <td>
+                    @if (await AuthorizationService.AuthorizeAsync(User, item, ContosoUniversity.Authorization.DepartmentOperations.Update))
+                {
+                        <a asp-action="Edit" asp-route-id="@item.DepartmentID">Edit</a> <text>|</text>
+                    }
+                    <a asp-action="Details" asp-route-id="@item.DepartmentID">Details</a> |
+                    @if (await AuthorizationService.AuthorizeAsync(User, item, ContosoUniversity.Authorization.DepartmentOperations.Delete))
+                    {
+                        <a asp-action="Delete" asp-route-id="@item.DepartmentID">Delete</a>
+
+                    }
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

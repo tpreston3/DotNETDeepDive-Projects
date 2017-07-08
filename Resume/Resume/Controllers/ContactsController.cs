@@ -72,8 +72,13 @@ namespace Resume.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,FirstName,MiddleName,LastName,StreetNumber,Street,City,State,ZipCode,PhoneNumber,EmailAddr,Website")] Contact contact)
+        public async Task<IActionResult> Create([Bind("ID,FirstName,MiddleName,LastName,StreetNumber,Street,City,State,ZiptCode,PhoneNumber,EmailAddr,Website")] Contact contact
+            , Employment emp)
         {
+
+             emp.Contact = contact;
+            _context.Employments.Add(emp);
+
             if (ModelState.IsValid)
             {
                 _context.Add(contact);

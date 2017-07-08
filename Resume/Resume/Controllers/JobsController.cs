@@ -33,10 +33,9 @@ namespace Resume.Controllers
             }
 
             var job = await _context.Job
-                .Include(s => s.Employments) //Need to include the Employments table data linked to this ID
-                .Include(s => s.Employments.Jobs)
-                    .ThenInclude(s => s.Accomplishments)     // Need to include the Employments table with its list of accomplishments from the Accomplishments table
-                .SingleOrDefaultAsync(m => m.ID == id);
+                .Include(s => s.Accomplishments) //Need to include the Employments table data linked to this ID
+                 .SingleOrDefaultAsync(m => m.ID == id);                                   // Need to include the Employments table with its list of accomplishments from the Accomplishments table
+
             if (job == null)
             {
                 return NotFound();
@@ -56,8 +55,14 @@ namespace Resume.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,EmployerName,JobTitle,StartDate,StopDate,JobDescription")] Job job)
+        public async Task<IActionResult> Create(int? ID, [Bind("ID,EmployerName,JobTitle,StartDate,StopDate,JobDescription")] Job job, Employment emp)
         {
+
+            if (emp.Contact.ID == ID)
+            {
+                emp.Jobs.Add(job);
+            }
+
             if (ModelState.IsValid)
             {
                 _context.Add(job);
@@ -66,6 +71,8 @@ namespace Resume.Controllers
             }
             return View(job);
         }
+
+
 
         // GET: Jobs/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -141,7 +148,10 @@ namespace Resume.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var job = await _context.Job.SingleOrDefaultAsync(m => m.ID == id);
+
+            var job = await _context.Job
+                .Include(j => j.Accomplishments)
+                .SingleOrDefaultAsync(m => m.ID == id);
             _context.Job.Remove(job);
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");

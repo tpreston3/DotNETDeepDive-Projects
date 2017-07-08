@@ -1,0 +1,71 @@
+@model IEnumerable<TwitterAPI_Scratch.Models.TwitterAPIAuth>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.ConsumerKey)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ConsumerSecret)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.AccessToken)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.AccessTokenSecret)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.BaseURL)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Owner)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.OwnerID)
+                </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ConsumerKey)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ConsumerSecret)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AccessToken)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AccessTokenSecret)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BaseURL)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Owner)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OwnerID)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
